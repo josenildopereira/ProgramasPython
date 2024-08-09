@@ -1,0 +1,17 @@
+import cv2
+from cvzone.HandTrackingModule import HandDetector             # para detectar gestos de mão
+
+webcam = cv2.VideoCapture(0)                                   # 0 é a webcam do meu nootebook
+rastreador = HandDetector(detectionCon= 0.8, maxHands= 2)      # detectionCon é a confiança minima. 1 é 100% de confiança e 0 é 0%. 0.8 é 80%. MaxHands é para detectar 2 mãos. Se tiver outras pessoas no video é só colocar a quantidade de mãos
+
+while True:
+    sucesso, imagem = webcam.read()                            # o read vai acessar a minha webcam atraves do VideoCapture. Na variavel sucesso ele vai mandar True ou False, se for True ele manda a imagem pra variavel imagem.
+    coordenadas, imagem_maos = rastreador.findHands(imagem)    # para receber as coordenadas das minhas mãos. 
+     
+    cv2.imshow('Projeto 04 - IA', imagem)                      # imshow é pra me mostrar a imagem
+
+    if cv2.waitKey(1) != -1:                                   # waitkey é para quando eu apertar qualquer tecla ele pare de mostrar a imagem. (1) significa a cada 1 milisegundo. Se eu não apertar em nenhuma tecla ele retorna -1.
+        break
+
+webcam.release()                                               # agora eu quero liberar a minha camera, então eu uso o release
+cv2.destroyAllWindows                                          # para fechar aquela janela que fica me mostrando
